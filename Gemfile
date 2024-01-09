@@ -1,13 +1,18 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.1"
 
+gem "simple_form"
+ruby "3.1.2"
+
+gem 'unsplash'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4", ">= 7.0.4.3"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
+gem "sassc-rails"
+gem "font-awesome-sass", "~> 6.1"
 
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
