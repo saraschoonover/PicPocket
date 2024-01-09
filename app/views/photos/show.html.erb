@@ -1,0 +1,13 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @photo %>
+<%= form_with(model: @like, url: likes_path(photo_id: @photo.id), method: :post) do |form| %>
+      <%= form.submit "Like Photo", class: "btn btn-primary" %>
+    <% end %>
+<div>
+<%= link_to "like", likes_path, @unsplash_photos %>
+  <%= link_to "Edit this photo", edit_photo_path(@photo) %> |
+  <%= link_to "Back to photos", photos_path %>
+
+  <%= button_to "Destroy this photo", @photo, method: :delete %>
+</div>

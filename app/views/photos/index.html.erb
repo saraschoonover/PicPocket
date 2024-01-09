@@ -1,0 +1,21 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Photos</h1>
+<%= render partial: 'search' %>
+<div class="container d-flex flex-wrap justify-content-center">
+  <% @photos.each do |photo| %>
+    <div class="card m-2" style="width: 18rem;">
+      <img src="<%= photo.image %>" alt="Photo" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">Caption: <%= photo.caption %></h5>
+        <button>
+          <%= link_to "Show this photo", photo %>
+        </button>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+
+
+<%= link_to "New photo", new_photo_path %>

@@ -1,0 +1,11 @@
+<div class="container">
+  <%= form_tag(photos_path, method: :get, class: "form-inline my-2 my-lg-0") do %>
+    <%= text_field_tag(:search, params[:search], class: "form-control mr-sm-2", placeholder: "Search") %>
+    <%= button_tag(type: "submit", class: "btn btn-outline-success my-2 my-sm-0") do %>
+      Search
+    <% end %>
+  <% end %>
+   <%= button_tag(type: "button", class: "btn btn-outline-danger my-2 my-sm-0", id: "clearButton") do %>
+    Clear
+  <% end %>
+</div>
