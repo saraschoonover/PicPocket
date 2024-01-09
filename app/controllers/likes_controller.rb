@@ -3,7 +3,7 @@ class LikesController < ApplicationController
 
   # GET /likes or /likes.json
   def index
-    @likes = Like.all
+    @likes = current_user.likes
   end
 
   # GET /likes/1 or /likes/1.json
@@ -23,11 +23,18 @@ class LikesController < ApplicationController
   # POST /likes or /likes.json
   def create
     @photo = Photo.find(params[:photo_id])
-    @like = current_user.likes.build(photo: @photo)
+    @like = current_user.likes.build(
+      photo: @photo,
+      caption: @photo.caption,
+      image: @photo.image
+    )
+
+    puts "Photo attributes: #{@photo.attributes}"
+    puts "Like attributes before save: #{@like.attributes}"
 
     respond_to do |format|
       if @like.save
-        format.html { redirect_to like_url(@like), notice: "Like was successfully created." }
+        format.html { redirect_to likes_path(@like), notice: "Like was successfully created." }
         format.json { render :show, status: :created, location: @like }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -35,6 +42,7 @@ class LikesController < ApplicationController
       end
     end
   end
+
 
   # PATCH/PUT /likes/1 or /likes/1.json
   def update
