@@ -1,12 +1,9 @@
-<div id="<%= dom_id like %>">
-  <p>
-    <strong>Photo:</strong>
-    <%= like.photo_id %>
-  </p>
 
-  <p>
-    <strong>User:</strong>
-    <%= like.user_id %>
-  </p>
 
+<div id="<%= dom_id like %>" class="card-like" style="width: 18rem;">
+  <img src="<%= like.image %>" class="card-img-top" alt="likePhoto">
+  <div class="card-body">
+    <h5 class="card-title"><%= like.caption  %></h5>
+
+  </div>
 </div>

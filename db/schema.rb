@@ -12,10 +12,14 @@
 
 ActiveRecord::Schema[7.0].define(version: 2024_01_07_163038) do
   create_table "likes", force: :cascade do |t|
+    t.string "caption"
+    t.string "image"
     t.integer "photo_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["photo_id"], name: "index_likes_on_photo_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "photos", force: :cascade do |t|
@@ -40,4 +44,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_07_163038) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "likes", "photos"
+  add_foreign_key "likes", "users"
 end
