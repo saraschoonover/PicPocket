@@ -1,11 +1,17 @@
 <p style="color: green"><%= notice %></p>
 
 <%= render @photo %>
+
+
 <%= form_with(model: @like, url: likes_path(photo_id: @photo.id), method: :post) do |form| %>
-      <%= form.submit "Like Photo", class: "btn btn-primary" %>
-    <% end %>
+  <div>
+    <%= form.text_field :category_name, placeholder: "Type a category name" %>
+    <%= form.submit "Like Photo", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
 <div>
-<%= link_to "like", likes_path, @unsplash_photos %>
+  <%= link_to "Like", likes_path, @unsplash_photos %>
   <%= link_to "Edit this photo", edit_photo_path(@photo) %> |
   <%= link_to "Back to photos", photos_path %>
 
