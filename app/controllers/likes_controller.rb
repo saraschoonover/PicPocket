@@ -36,7 +36,11 @@ class LikesController < ApplicationController
     @photo = Photo.find(params[:photo_id])
 
     # Find or create the category with the given name
-    category = current_user.categories.find_or_create_by(name: params[:category_name])
+    category = if params[:like] && params[:like][:category_id].present?
+      Category.find(params[:like][:category_id])
+    else
+      current_user.categories.find_or_create_by(name: params.dig(:like, :category_name))
+    end
 
     # Build a new like with the given attributes and associated category
     @like = current_user.likes.build(
