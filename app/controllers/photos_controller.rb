@@ -18,7 +18,7 @@ class PhotosController < ApplicationController
 
   # GET /photos/1 or /photos/1.json
   def show
-    
+    @categories = current_user.categories
   end
 
   # GET /photos/new

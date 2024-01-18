@@ -4,6 +4,15 @@ class LikesController < ApplicationController
   # GET /likes or /likes.json
   def index
     @likes = current_user.likes
+    @categories = current_user.categories
+
+
+    if params[:category_id].present?
+      @likes = @likes.where(category_id: params[:category_id])
+    end
+
+    puts "Categories: #{@categories.inspect}" # Add this line
+
   end
 
   # GET /likes/1 or /likes/1.json
@@ -14,23 +23,32 @@ class LikesController < ApplicationController
   # GET /likes/new
   def new
     @like = Like.new
+    @categories = current_user.categories
   end
 
   # GET /likes/1/edit
   def edit
+
   end
 
   # POST /likes or /likes.json
   def create
     @photo = Photo.find(params[:photo_id])
+
+    # Find or create the category with the given name
+    category = if params[:like] && params[:like][:category_id].present?
+      Category.find(params[:like][:category_id])
+    else
+      current_user.categories.find_or_create_by(name: params.dig(:like, :category_name))
+    end
+
+    # Build a new like with the given attributes and associated category
     @like = current_user.likes.build(
       photo: @photo,
       caption: @photo.caption,
-      image: @photo.image
+      image: @photo.image,
+      category: category
     )
-
-    puts "Photo attributes: #{@photo.attributes}"
-    puts "Like attributes before save: #{@like.attributes}"
 
     respond_to do |format|
       if @like.save
@@ -42,6 +60,8 @@ class LikesController < ApplicationController
       end
     end
   end
+
+
 
 
   # PATCH/PUT /likes/1 or /likes/1.json
@@ -75,6 +95,6 @@ class LikesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def like_params
-      params.require(:like).permit(:photo_id, :user_id)
+      params.require(:like).permit(:photo_id, :user_id, :category_name, :image, :caption)
     end
 end
