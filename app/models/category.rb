@@ -19,4 +19,6 @@
 class Category < ApplicationRecord
   has_many :likes
   belongs_to :user
+
+  validates :name, presence: true, uniqueness: { scope: :user_id }
 end

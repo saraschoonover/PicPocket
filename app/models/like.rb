@@ -41,7 +41,6 @@ class Like < ApplicationRecord
 
   def set_category_from_name
     return unless category_name.present?
-
     # Find or create the category based on the name
     self.category = Category.find_or_create_by(name: category_name)
   end

@@ -2,19 +2,14 @@
 
 <%= render @photo %>
 
-<%= form_tag(likes_path, method: :get) do %>
-  <%= select_tag(:category_id, options_from_collection_for_select(@categories, 'id', 'name', params[:category_id]), prompt: 'All Categories') %>
-  <%= submit_tag 'Filter' %>
-<% end %>
-
 <%= form_with(model: @like, url: likes_path(photo_id: @photo.id), method: :post) do |form| %>
   <div>
     <%= label_tag 'category_id', 'Choose a Category:' %>
     <%= select_tag 'category_id', options_from_collection_for_select(@categories, 'id', 'name'), prompt: 'Select a Category' %>
   </div>
 
-  <div>
-    <%= form.text_field :category_name, placeholder: "Or type a new category name" %>
+ <div>
+    <%= form.text_field :category_name, placeholder: "Or type a new category name", name: "like[category_name]" %>
     <%= form.submit "Like Photo", class: "btn btn-primary" %>
   </div>
 <% end %>
@@ -26,4 +21,3 @@
 
   <%= button_to "Destroy this photo", @photo, method: :delete %>
 </div>
-
