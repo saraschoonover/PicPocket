@@ -6,7 +6,6 @@ class LikesController < ApplicationController
     @likes = current_user.likes
     @categories = current_user.categories
 
-
     if params[:category_id].present?
       @likes = @likes.where(category_id: params[:category_id])
     end
@@ -35,17 +34,14 @@ class LikesController < ApplicationController
   def create
     @photo = Photo.find(params[:photo_id])
 
-
-    # Use only category_name to find or create the category
-    puts "Params: #{params.inspect}"
-    puts "Category Name from params: #{params[:like]&.dig(:category_name)}"
-
-    # Use only category_name to find or create the category
-    category_name = params.dig(:like, :category_name)
-    puts "Category Name: #{category_name}"
-
-    category = Category.find_or_create_by(name: category_name, user_id: current_user.id)
-
+    #category_name = params.dig(:like, :category_name)
+    if params[:like][:category_id].present?
+      category = Category.find(params[:like][:category_id])
+    else
+      category_name = params.dig(:like, :category_name)
+      category = Category.find_or_create_by(name: category_name, user_id: current_user.id)
+    end
+    #category = Category.find_or_create_by(name: category_name, user_id: current_user.id)
 
     # Build a new like with the given attributes and associated category
     @like = current_user.likes.build(
