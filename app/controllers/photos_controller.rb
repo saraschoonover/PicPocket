@@ -14,6 +14,8 @@ class PhotosController < ApplicationController
     else
       @photos = []
     end
+    @like = Like.new
+    @categories = current_user.categories
   end
 
   # GET /photos/1 or /photos/1.json
